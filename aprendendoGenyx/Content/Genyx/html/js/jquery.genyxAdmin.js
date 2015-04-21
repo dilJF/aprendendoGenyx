@@ -698,7 +698,7 @@
             } else {
                 $('#themer ul.unstyled').append('<li><label class="checkbox inline"><input type="checkbox" name="fixed" id="fixedWidth"> Fixed version</label></li>');
             }
-            $('#themer').append('<a href="#" id="themerBtn" class="white"><i class="icon20 i-cog-2" style="margin-left:-50px;background: url(../images/patterns/low_contrast_linen.png) repeat;padding:8px 10px;border:1px solid #000;border-right:0;float:left;margin-top:-55px;"></i></a>');
+            //$('#themer').append('<a href="#" id="themerBtn" class="white"><i class="icon20 i-cog-2" style="margin-left:-50px;background: url(../images/patterns/low_contrast_linen.png) repeat;padding:8px 10px;border:1px solid #000;border-right:0;float:left;margin-top:-55px;"></i></a>');
         }
 
         function makeFixedWidth() {

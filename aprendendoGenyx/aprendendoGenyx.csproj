@@ -1035,6 +1035,9 @@
   <ItemGroup>
     <Content Include="Views\Shared\_LayoutIndex.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Home\Dashboard.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

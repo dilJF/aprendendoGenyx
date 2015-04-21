@@ -7,7 +7,8 @@
             <div class="page-header">
                 <h3 class="center">Efetue o login</h3>
             </div>
-            <form id="login-form" class="form-horizontal" action="dashboard.html" novalidate="novalidate">
+            @using (Html.BeginForm("Dashboard", "Home", FormMethod.Post, new { @class = "form-horizontal", id = "login-form", @novalidate = "novalidate" }))
+            {
                 <div class="row-fluid">
                     <div class="control-group">
                         <div class="controls-row">
@@ -24,12 +25,12 @@
                     <div class="form-actions full">
                         <label class="checkbox pull-left">
                             <div class="checker"><span class=""><input type="checkbox" value="1" name="remember"></span></div>
-                            <span class="pad-left5">Remember me ?</span>
+                            <span class="pad-left5">Lembre-me ?</span>
                         </label>
                         <button id="loginBtn" type="submit" class="btn btn-primary pull-right span5">Login</button>
                     </div>
                 </div><!-- End .row-fluid  -->
-            </form>
+            }
         </div>
 
         <div id="forgot">
@@ -51,7 +52,7 @@
                         </div>
                     </div><!-- End .control-group  -->
                     <div class="form-actions full">
-                        <button type="submit" class="btn btn-large btn-block btn-success">Recover my password</button>
+                        <button type="submit" class="btn btn-large btn-block btn-success">Recupere minha senha</button>
                     </div>
                 </div><!-- End .row-fluid  -->
             </form>
