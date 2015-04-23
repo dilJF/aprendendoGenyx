@@ -206,6 +206,8 @@
     <Content Include="Content\Genyx\html\images\avatars\suggebig.jpg" />
     <Content Include="Content\Genyx\html\images\backtotop%402x.png" />
     <Content Include="Content\Genyx\html\images\backtotop.png" />
+    <Content Include="Content\Genyx\html\images\chronos-biometria-interna.png" />
+    <Content Include="Content\Genyx\html\images\chronos-biometria.png" />
     <Content Include="Content\Genyx\html\images\error.png" />
     <Content Include="Content\Genyx\html\images\glyphicons-halflings-white.png" />
     <Content Include="Content\Genyx\html\images\glyphicons-halflings.png" />
@@ -1037,6 +1039,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Shared\_LayoutPadrao.cshtml" />
+    <Content Include="Views\Shared\_Cabecalho.cshtml" />
+    <Content Include="Views\Shared\_Sidebar.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
