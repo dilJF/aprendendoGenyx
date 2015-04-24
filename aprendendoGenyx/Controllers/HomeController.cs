@@ -13,7 +13,14 @@ namespace aprendendoGenyx.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            if (Session["usuarioLogadoID"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
     }
 }

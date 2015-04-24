@@ -1,25 +1,40 @@
-﻿@{Layout = "~/Views/Shared/_LayoutIndex.cshtml";}
+﻿@model aprendendoGenyx.Models.Usuarios
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
 <div id="login">
     <div class="login-wrapper" data-active="log">
-        <a class="brand" href="dashboard.html"><img src="~/Content/Genyx/html/images/chronos-biometria.png" alt="Genyx admin"></a>
+        <a class="brand" href="~/Views/Home/Index.cshtml">
+            <img src="~/Content/Genyx/html/images/chronos-biometria.png" alt="Genyx admin">
+        </a>
         <div id="log">
 
             <div class="page-header">
                 <h3 class="center">Efetue o login</h3>
             </div>
-            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", id = "login-form", @novalidate = "novalidate" }))
+            @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "form-horizontal", id = "login-form", @novalidate = "novalidate" }))
             {
+                @Html.AntiForgeryToken() //previne o ataque CSRF
+                @Html.ValidationSummary(true)
+                if (@ViewBag.Message != null)
+                {
+                    <div style="border:1px solid red">
+                        @ViewBag.Message
+                    </div>
+                }
                 <div class="row-fluid">
                     <div class="control-group">
                         <div class="controls-row">
                             <div class="icon"><i class="icon20 i-user"></i></div>
-                            <input class="span12 valid" type="text" name="user" id="user" placeholder="Username" value="suggeelson@suggeelson.com">
+                            @Html.TextBoxFor(a => a.NomeUsuario, new { @class = "span12 valid", id = "user", @placeholder = "Username" }) @*<input class="span12 valid" type="text" name="user" id="user" placeholder="Username" value="suggeelson@suggeelson.com">*@
+                            @Html.ValidationMessageFor(a => a.NomeUsuario)
                         </div>
                     </div><!-- End .control-group  -->
                     <div class="control-group">
                         <div class="controls-row">
                             <div class="icon"><i class="icon20 i-key"></i></div>
-                            <input class="span12 valid" type="password" name="password" id="password" placeholder="Password" value="somepassword">
+                            @Html.PasswordFor(a => a.Senha, new { @class = "span12 valid", id = "password", @placeholder = "Password" }) @*<input class="span12 valid" type="password" name="password" id="password" placeholder="Password" value="somepassword">*@
+                            @Html.ValidationMessageFor(a => a.Senha)
                         </div>
                     </div><!-- End .control-group  -->
                     <div class="form-actions full">
