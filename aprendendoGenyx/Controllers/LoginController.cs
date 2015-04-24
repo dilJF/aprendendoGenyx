@@ -6,14 +6,15 @@ using System.Web.Mvc;
 
 namespace aprendendoGenyx.Controllers
 {
-    public class HomeController : Controller
+    public class LoginController : Controller
     {
         //
-        // GET: /Home/
+        // GET: /Login/
 
         public ActionResult Index()
         {
             return View();
         }
+
     }
 }
