@@ -13,10 +13,10 @@ namespace aprendendoGenyx.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class db_chronos_biometria_homologEntities : DbContext
+    public partial class db_chronos_biometria_homologEntities1 : DbContext
     {
-        public db_chronos_biometria_homologEntities()
-            : base("name=db_chronos_biometria_homologEntities")
+        public db_chronos_biometria_homologEntities1()
+            : base("name=db_chronos_biometria_homologEntities1")
         {
         }
     
@@ -30,6 +30,5 @@ namespace aprendendoGenyx.Models
         public virtual DbSet<grupo> grupo { get; set; }
         public virtual DbSet<permissao> permissao { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
-        public virtual DbSet<modulo> modulo { get; set; }
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="148b1733c2f343c1ac27cb0777873803" Name="Diagram1">
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.funcionalidade" Width="1.5" PointX="3.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.funcionalidade_permissao" Width="1.5" PointX="11.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.grupo" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.permissao" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.usuario" Width="1.5" PointX="8.25" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_funcionalidade" ManuallyRouted="false" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_funcionalidade" ManuallyRouted="false" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_grupo_funcionalidade" ManuallyRouted="false" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_permissao_funcionalidade" ManuallyRouted="false" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao" ManuallyRouted="false" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_grupo" ManuallyRouted="false" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_usuario_grupo" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -5,7 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7473689ca5494b29801646c8e24650c7" Name="Diagram1">
-        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.Usuarios" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.funcionalidade" Width="1.5" PointX="6.125" PointY="0.5" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.funcionalidade_permissao" Width="1.5" PointX="10.125" PointY="0.5" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.grupo" Width="1.5" PointX="8.25" PointY="3.125" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.permissao" Width="1.5" PointX="8.25" PointY="0.5" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.usuario" Width="1.5" PointX="10.125" PointY="3.25" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_grupo_funcionalidade" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_permissao_funcionalidade" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_grupo" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_usuario_grupo" />
+        <EntityTypeShape EntityType="db_chronos_biometria_homologModel.modulo" Width="1.5" PointX="3.875" PointY="1.375" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_modulo" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_funcionalidade" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao1" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_funcionalidade" />
+        <AssociationConnector Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

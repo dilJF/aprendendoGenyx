@@ -11,16 +11,17 @@ namespace aprendendoGenyx.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class Usuarios
+    
+    public partial class funcionalidade_permissao
     {
-        public int Id { get; set; }
-        [Display(Name = "Login")]
-        [Required(ErrorMessage = "Informe o nome do usuário", AllowEmptyStrings = false)]
-        public string NomeUsuario { get; set; }
-        [Required(ErrorMessage = "Informe a senha do usuário", AllowEmptyStrings = false)]
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
-        public string Senha { get; set; }
+        public int funcionalidade_permissao_id { get; set; }
+        public int grupo_id { get; set; }
+        public int funcionalidade_id { get; set; }
+        public int permissao_id { get; set; }
+        public byte deleted { get; set; }
+    
+        public virtual funcionalidade funcionalidade { get; set; }
+        public virtual permissao permissao { get; set; }
+        public virtual grupo grupo { get; set; }
     }
 }

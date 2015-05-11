@@ -121,23 +121,40 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChronosBiometriaDataAccessModel.Context.cs">
+    <Compile Include="Models\db_chronos_biometriaModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ChronosBiometriaDataAccessModel.Context.tt</DependentUpon>
+      <DependentUpon>db_chronos_biometriaModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChronosBiometriaDataAccessModel.cs">
+    <Compile Include="Models\db_chronos_biometriaModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ChronosBiometriaDataAccessModel.tt</DependentUpon>
+      <DependentUpon>db_chronos_biometriaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChronosBiometriaDataAccessModel.Designer.cs">
+    <Compile Include="Models\db_chronos_biometriaModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ChronosBiometriaDataAccessModel.edmx</DependentUpon>
+      <DependentUpon>db_chronos_biometriaModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuarios.cs">
-      <DependentUpon>ChronosBiometriaDataAccessModel.tt</DependentUpon>
+    <Compile Include="Models\funcionalidade.cs">
+      <DependentUpon>db_chronos_biometriaModel.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\funcionalidade_permissao.cs">
+      <DependentUpon>db_chronos_biometriaModel.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\grupo.cs">
+      <DependentUpon>db_chronos_biometriaModel.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\permissao.cs">
+      <DependentUpon>db_chronos_biometriaModel.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\usuario.cs">
+      <DependentUpon>db_chronos_biometriaModel.tt</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1064,22 +1081,22 @@
     <Content Include="Views\Shared\_LayoutIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\ChronosBiometriaDataAccessModel.edmx">
+    <EntityDeploy Include="Models\db_chronos_biometriaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ChronosBiometriaDataAccessModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>db_chronos_biometriaModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ChronosBiometriaDataAccessModel.Context.tt">
+    <Content Include="Models\db_chronos_biometriaModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ChronosBiometriaDataAccessModel.edmx</DependentUpon>
-      <LastGenOutput>ChronosBiometriaDataAccessModel.Context.cs</LastGenOutput>
+      <DependentUpon>db_chronos_biometriaModel.edmx</DependentUpon>
+      <LastGenOutput>db_chronos_biometriaModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ChronosBiometriaDataAccessModel.edmx.diagram">
-      <DependentUpon>ChronosBiometriaDataAccessModel.edmx</DependentUpon>
+    <Content Include="Models\db_chronos_biometriaModel.edmx.diagram">
+      <DependentUpon>db_chronos_biometriaModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\ChronosBiometriaDataAccessModel.tt">
+    <Content Include="Models\db_chronos_biometriaModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ChronosBiometriaDataAccessModel.edmx</DependentUpon>
-      <LastGenOutput>ChronosBiometriaDataAccessModel.cs</LastGenOutput>
+      <DependentUpon>db_chronos_biometriaModel.edmx</DependentUpon>
+      <LastGenOutput>db_chronos_biometriaModel.cs</LastGenOutput>
     </Content>
     <None Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPadrao.cshtml" />

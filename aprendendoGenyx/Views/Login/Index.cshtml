@@ -1,4 +1,4 @@
-﻿@model aprendendoGenyx.Models.Usuarios
+﻿@model aprendendoGenyx.Models.usuario
 @{
     Layout = "~/Views/Shared/_LayoutIndex.cshtml";
 }
@@ -26,15 +26,15 @@
                     <div class="control-group">
                         <div class="controls-row">
                             <div class="icon"><i class="icon20 i-user"></i></div>
-                            @Html.TextBoxFor(a => a.NomeUsuario, new { @class = "span12 valid", id = "user", @placeholder = "Username" }) @*<input class="span12 valid" type="text" name="user" id="user" placeholder="Username" value="suggeelson@suggeelson.com">*@
-                            @Html.ValidationMessageFor(a => a.NomeUsuario)
+                            @Html.TextBoxFor(a => a.login, new { @class = "span12 valid", id = "user", @placeholder = "Username" }) @*<input class="span12 valid" type="text" name="user" id="user" placeholder="Username" value="suggeelson@suggeelson.com">*@
+                            @Html.ValidationMessageFor(a => a.login)
                         </div>
                     </div><!-- End .control-group  -->
                     <div class="control-group">
                         <div class="controls-row">
                             <div class="icon"><i class="icon20 i-key"></i></div>
-                            @Html.PasswordFor(a => a.Senha, new { @class = "span12 valid", id = "password", @placeholder = "Password" }) @*<input class="span12 valid" type="password" name="password" id="password" placeholder="Password" value="somepassword">*@
-                            @Html.ValidationMessageFor(a => a.Senha)
+                            @Html.PasswordFor(a => a.senha, new { @class = "span12 valid", id = "password", @placeholder = "Password" }) @*<input class="span12 valid" type="password" name="password" id="password" placeholder="Password" value="somepassword">*@
+                            @Html.ValidationMessageFor(a => a.senha)
                         </div>
                     </div><!-- End .control-group  -->
                     <div class="form-actions full">

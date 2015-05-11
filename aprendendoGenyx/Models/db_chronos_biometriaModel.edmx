@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="db_chronos_biometria_homologModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="db_chronos_biometria_homologModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="funcionalidade">
           <Key>
             <PropertyRef Name="funcionalidade_id" />
           </Key>
           <Property Name="funcionalidade_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="modulo_id" Type="int" Nullable="false" />
+          <Property Name="funcionalidade_pai_id" Type="int" />
           <Property Name="nome" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="controller" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ordem" Type="tinyint" Nullable="false" />
@@ -36,13 +36,6 @@
           <Property Name="funcionalidade_id_home" Type="int" Nullable="false" />
           <Property Name="datacriado" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="deleted" Type="tinyint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="modulo">
-          <Key>
-            <PropertyRef Name="modulo_id" />
-          </Key>
-          <Property Name="modulo_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nome" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="permissao">
           <Key>
@@ -70,27 +63,27 @@
           <Property Name="ativo" Type="tinyint" Nullable="false" />
           <Property Name="deleted" Type="tinyint" Nullable="false" />
         </EntityType>
-        <Association Name="FK_funcionalidade_modulo">
-          <End Role="modulo" Type="Self.modulo" Multiplicity="1" />
-          <End Role="funcionalidade" Type="Self.funcionalidade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="modulo">
-              <PropertyRef Name="modulo_id" />
-            </Principal>
-            <Dependent Role="funcionalidade">
-              <PropertyRef Name="modulo_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_funcionalidade_permissao">
-          <End Role="funcionalidade" Type="Self.funcionalidade" Multiplicity="1" />
-          <End Role="funcionalidade_permissao" Type="Self.funcionalidade_permissao" Multiplicity="*" />
+        <Association Name="FK_funcionalidade_funcionalidade">
+          <End Role="funcionalidade" Type="Self.funcionalidade" Multiplicity="0..1" />
+          <End Role="funcionalidade1" Type="Self.funcionalidade" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="funcionalidade">
               <PropertyRef Name="funcionalidade_id" />
             </Principal>
+            <Dependent Role="funcionalidade1">
+              <PropertyRef Name="funcionalidade_pai_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_funcionalidade_permissao">
+          <End Role="permissao" Type="Self.permissao" Multiplicity="1" />
+          <End Role="funcionalidade_permissao" Type="Self.funcionalidade_permissao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="permissao">
+              <PropertyRef Name="permissao_id" />
+            </Principal>
             <Dependent Role="funcionalidade_permissao">
-              <PropertyRef Name="funcionalidade_id" />
+              <PropertyRef Name="permissao_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -158,15 +151,14 @@
           <EntitySet Name="funcionalidade" EntityType="Self.funcionalidade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="funcionalidade_permissao" EntityType="Self.funcionalidade_permissao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="grupo" EntityType="Self.grupo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="modulo" EntityType="Self.modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="permissao" EntityType="Self.permissao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_funcionalidade_modulo" Association="Self.FK_funcionalidade_modulo">
-            <End Role="modulo" EntitySet="modulo" />
+          <AssociationSet Name="FK_funcionalidade_funcionalidade" Association="Self.FK_funcionalidade_funcionalidade">
             <End Role="funcionalidade" EntitySet="funcionalidade" />
+            <End Role="funcionalidade1" EntitySet="funcionalidade" />
           </AssociationSet>
           <AssociationSet Name="FK_funcionalidade_permissao" Association="Self.FK_funcionalidade_permissao">
-            <End Role="funcionalidade" EntitySet="funcionalidade" />
+            <End Role="permissao" EntitySet="permissao" />
             <End Role="funcionalidade_permissao" EntitySet="funcionalidade_permissao" />
           </AssociationSet>
           <AssociationSet Name="FK_funcionalidade_permissao_funcionalidade" Association="Self.FK_funcionalidade_permissao_funcionalidade">
@@ -190,62 +182,27 @@
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="db_chronos_biometria_homologModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="db_chronos_biometria_homologEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="funcionalidade" EntityType="db_chronos_biometria_homologModel.funcionalidade" />
-          <EntitySet Name="funcionalidade_permissao" EntityType="db_chronos_biometria_homologModel.funcionalidade_permissao" />
-          <EntitySet Name="grupo" EntityType="db_chronos_biometria_homologModel.grupo" />
-          <EntitySet Name="permissao" EntityType="db_chronos_biometria_homologModel.permissao" />
-          <EntitySet Name="usuario" EntityType="db_chronos_biometria_homologModel.usuario" />
-          <AssociationSet Name="FK_funcionalidade_permissao" Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao">
-            <End Role="funcionalidade" EntitySet="funcionalidade" />
-            <End Role="funcionalidade_permissao" EntitySet="funcionalidade_permissao" />
-          </AssociationSet>
-          <AssociationSet Name="FK_funcionalidade_permissao_funcionalidade" Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_funcionalidade">
-            <End Role="funcionalidade" EntitySet="funcionalidade" />
-            <End Role="funcionalidade_permissao" EntitySet="funcionalidade_permissao" />
-          </AssociationSet>
-          <AssociationSet Name="FK_grupo_funcionalidade" Association="db_chronos_biometria_homologModel.FK_grupo_funcionalidade">
-            <End Role="funcionalidade" EntitySet="funcionalidade" />
-            <End Role="grupo" EntitySet="grupo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_permissao_funcionalidade" Association="db_chronos_biometria_homologModel.FK_permissao_funcionalidade">
-            <End Role="funcionalidade" EntitySet="funcionalidade" />
-            <End Role="permissao" EntitySet="permissao" />
-          </AssociationSet>
-          <AssociationSet Name="FK_funcionalidade_permissao_grupo" Association="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_grupo">
-            <End Role="grupo" EntitySet="grupo" />
-            <End Role="funcionalidade_permissao" EntitySet="funcionalidade_permissao" />
-          </AssociationSet>
-          <AssociationSet Name="FK_usuario_grupo" Association="db_chronos_biometria_homologModel.FK_usuario_grupo">
-            <End Role="grupo" EntitySet="grupo" />
-            <End Role="usuario" EntitySet="usuario" />
-          </AssociationSet>
-          <EntitySet Name="modulo" EntityType="db_chronos_biometria_homologModel.modulo" />
-          <AssociationSet Name="FK_funcionalidade_modulo" Association="db_chronos_biometria_homologModel.FK_funcionalidade_modulo">
-            <End Role="modulo" EntitySet="modulo" />
-            <End Role="funcionalidade" EntitySet="funcionalidade" />
-          </AssociationSet>
-        </EntityContainer>
+      <Schema Namespace="db_chronos_biometria_homologModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="funcionalidade">
           <Key>
             <PropertyRef Name="funcionalidade_id" />
           </Key>
           <Property Name="funcionalidade_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="modulo_id" Type="Int32" Nullable="false" />
-          <Property Name="nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="controller" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="funcionalidade_pai_id" Type="Int32" />
+          <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="controller" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ordem" Type="Byte" Nullable="false" />
           <Property Name="show_menu" Type="Byte" Nullable="false" />
           <Property Name="deleted" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="funcionalidade_permissao" Relationship="db_chronos_biometria_homologModel.FK_funcionalidade_permissao" FromRole="funcionalidade" ToRole="funcionalidade_permissao" />
-          <NavigationProperty Name="funcionalidade_permissao1" Relationship="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_funcionalidade" FromRole="funcionalidade" ToRole="funcionalidade_permissao" />
-          <NavigationProperty Name="grupo" Relationship="db_chronos_biometria_homologModel.FK_grupo_funcionalidade" FromRole="funcionalidade" ToRole="grupo" />
-          <NavigationProperty Name="permissao" Relationship="db_chronos_biometria_homologModel.FK_permissao_funcionalidade" FromRole="funcionalidade" ToRole="permissao" />
-          <NavigationProperty Name="modulo" Relationship="db_chronos_biometria_homologModel.FK_funcionalidade_modulo" FromRole="funcionalidade" ToRole="modulo" />
+          <NavigationProperty Name="funcionalidade1" Relationship="Self.FK_funcionalidade_funcionalidade" FromRole="funcionalidade" ToRole="funcionalidade1" />
+          <NavigationProperty Name="funcionalidade2" Relationship="Self.FK_funcionalidade_funcionalidade" FromRole="funcionalidade1" ToRole="funcionalidade" />
+          <NavigationProperty Name="funcionalidade_permissao" Relationship="Self.FK_funcionalidade_permissao_funcionalidade" FromRole="funcionalidade" ToRole="funcionalidade_permissao" />
+          <NavigationProperty Name="grupo" Relationship="Self.FK_grupo_funcionalidade" FromRole="funcionalidade" ToRole="grupo" />
+          <NavigationProperty Name="permissao" Relationship="Self.FK_permissao_funcionalidade" FromRole="funcionalidade" ToRole="permissao" />
         </EntityType>
         <EntityType Name="funcionalidade_permissao">
           <Key>
@@ -256,22 +213,22 @@
           <Property Name="funcionalidade_id" Type="Int32" Nullable="false" />
           <Property Name="permissao_id" Type="Int32" Nullable="false" />
           <Property Name="deleted" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="funcionalidade" Relationship="db_chronos_biometria_homologModel.FK_funcionalidade_permissao" FromRole="funcionalidade_permissao" ToRole="funcionalidade" />
-          <NavigationProperty Name="funcionalidade1" Relationship="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_funcionalidade" FromRole="funcionalidade_permissao" ToRole="funcionalidade" />
-          <NavigationProperty Name="grupo" Relationship="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_grupo" FromRole="funcionalidade_permissao" ToRole="grupo" />
+          <NavigationProperty Name="funcionalidade" Relationship="Self.FK_funcionalidade_permissao_funcionalidade" FromRole="funcionalidade_permissao" ToRole="funcionalidade" />
+          <NavigationProperty Name="permissao" Relationship="Self.FK_funcionalidade_permissao" FromRole="funcionalidade_permissao" ToRole="permissao" />
+          <NavigationProperty Name="grupo" Relationship="Self.FK_funcionalidade_permissao_grupo" FromRole="funcionalidade_permissao" ToRole="grupo" />
         </EntityType>
         <EntityType Name="grupo">
           <Key>
             <PropertyRef Name="grupo_id" />
           </Key>
           <Property Name="grupo_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="funcionalidade_id_home" Type="Int32" Nullable="false" />
-          <Property Name="datacriado" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="datacriado" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="deleted" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="funcionalidade" Relationship="db_chronos_biometria_homologModel.FK_grupo_funcionalidade" FromRole="grupo" ToRole="funcionalidade" />
-          <NavigationProperty Name="funcionalidade_permissao" Relationship="db_chronos_biometria_homologModel.FK_funcionalidade_permissao_grupo" FromRole="grupo" ToRole="funcionalidade_permissao" />
-          <NavigationProperty Name="usuario" Relationship="db_chronos_biometria_homologModel.FK_usuario_grupo" FromRole="grupo" ToRole="usuario" />
+          <NavigationProperty Name="funcionalidade" Relationship="Self.FK_grupo_funcionalidade" FromRole="grupo" ToRole="funcionalidade" />
+          <NavigationProperty Name="funcionalidade_permissao" Relationship="Self.FK_funcionalidade_permissao_grupo" FromRole="grupo" ToRole="funcionalidade_permissao" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_usuario_grupo" FromRole="grupo" ToRole="usuario" />
         </EntityType>
         <EntityType Name="permissao">
           <Key>
@@ -279,43 +236,44 @@
           </Key>
           <Property Name="permissao_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="funcionalidade_id" Type="Int32" Nullable="false" />
-          <Property Name="nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="deleted" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="funcionalidade" Relationship="db_chronos_biometria_homologModel.FK_permissao_funcionalidade" FromRole="permissao" ToRole="funcionalidade" />
+          <NavigationProperty Name="funcionalidade" Relationship="Self.FK_permissao_funcionalidade" FromRole="permissao" ToRole="funcionalidade" />
+          <NavigationProperty Name="funcionalidade_permissao" Relationship="Self.FK_funcionalidade_permissao" FromRole="permissao" ToRole="funcionalidade_permissao" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
             <PropertyRef Name="usuario_id" />
           </Key>
           <Property Name="usuario_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="senha" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="grupo_id" Type="Int32" Nullable="false" />
-          <Property Name="login" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="imagem" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="data_criado" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="login" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="imagem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_criado" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="ultimo_acesso" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="qtd_acessos" Type="Int32" Nullable="false" />
           <Property Name="ativo" Type="Byte" Nullable="false" />
           <Property Name="deleted" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="grupo" Relationship="db_chronos_biometria_homologModel.FK_usuario_grupo" FromRole="usuario" ToRole="grupo" />
+          <NavigationProperty Name="grupo" Relationship="Self.FK_usuario_grupo" FromRole="usuario" ToRole="grupo" />
         </EntityType>
-        <Association Name="FK_funcionalidade_permissao">
-          <End Type="db_chronos_biometria_homologModel.funcionalidade" Role="funcionalidade" Multiplicity="1" />
-          <End Type="db_chronos_biometria_homologModel.funcionalidade_permissao" Role="funcionalidade_permissao" Multiplicity="*" />
+        <Association Name="FK_funcionalidade_funcionalidade">
+          <End Role="funcionalidade" Type="Self.funcionalidade" Multiplicity="0..1" />
+          <End Role="funcionalidade1" Type="Self.funcionalidade" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="funcionalidade">
               <PropertyRef Name="funcionalidade_id" />
             </Principal>
-            <Dependent Role="funcionalidade_permissao">
-              <PropertyRef Name="funcionalidade_id" />
+            <Dependent Role="funcionalidade1">
+              <PropertyRef Name="funcionalidade_pai_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_funcionalidade_permissao_funcionalidade">
-          <End Type="db_chronos_biometria_homologModel.funcionalidade" Role="funcionalidade" Multiplicity="1" />
-          <End Type="db_chronos_biometria_homologModel.funcionalidade_permissao" Role="funcionalidade_permissao" Multiplicity="*" />
+          <End Role="funcionalidade" Type="Self.funcionalidade" Multiplicity="1" />
+          <End Role="funcionalidade_permissao" Type="Self.funcionalidade_permissao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="funcionalidade">
               <PropertyRef Name="funcionalidade_id" />
@@ -326,8 +284,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_grupo_funcionalidade">
-          <End Type="db_chronos_biometria_homologModel.funcionalidade" Role="funcionalidade" Multiplicity="1" />
-          <End Type="db_chronos_biometria_homologModel.grupo" Role="grupo" Multiplicity="*" />
+          <End Role="funcionalidade" Type="Self.funcionalidade" Multiplicity="1" />
+          <End Role="grupo" Type="Self.grupo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="funcionalidade">
               <PropertyRef Name="funcionalidade_id" />
@@ -338,8 +296,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_permissao_funcionalidade">
-          <End Type="db_chronos_biometria_homologModel.funcionalidade" Role="funcionalidade" Multiplicity="1" />
-          <End Type="db_chronos_biometria_homologModel.permissao" Role="permissao" Multiplicity="*" />
+          <End Role="funcionalidade" Type="Self.funcionalidade" Multiplicity="1" />
+          <End Role="permissao" Type="Self.permissao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="funcionalidade">
               <PropertyRef Name="funcionalidade_id" />
@@ -349,9 +307,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_funcionalidade_permissao">
+          <End Role="permissao" Type="Self.permissao" Multiplicity="1" />
+          <End Role="funcionalidade_permissao" Type="Self.funcionalidade_permissao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="permissao">
+              <PropertyRef Name="permissao_id" />
+            </Principal>
+            <Dependent Role="funcionalidade_permissao">
+              <PropertyRef Name="permissao_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_funcionalidade_permissao_grupo">
-          <End Type="db_chronos_biometria_homologModel.grupo" Role="grupo" Multiplicity="1" />
-          <End Type="db_chronos_biometria_homologModel.funcionalidade_permissao" Role="funcionalidade_permissao" Multiplicity="*" />
+          <End Role="grupo" Type="Self.grupo" Multiplicity="1" />
+          <End Role="funcionalidade_permissao" Type="Self.funcionalidade_permissao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="grupo">
               <PropertyRef Name="grupo_id" />
@@ -362,8 +332,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_usuario_grupo">
-          <End Type="db_chronos_biometria_homologModel.grupo" Role="grupo" Multiplicity="1" />
-          <End Type="db_chronos_biometria_homologModel.usuario" Role="usuario" Multiplicity="*" />
+          <End Role="grupo" Type="Self.grupo" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="grupo">
               <PropertyRef Name="grupo_id" />
@@ -373,100 +343,107 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="modulo">
-          <Key>
-            <PropertyRef Name="modulo_id" />
-          </Key>
-          <Property Name="modulo_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="funcionalidade" Relationship="db_chronos_biometria_homologModel.FK_funcionalidade_modulo" FromRole="modulo" ToRole="funcionalidade" />
-        </EntityType>
-        <Association Name="FK_funcionalidade_modulo">
-          <End Type="db_chronos_biometria_homologModel.modulo" Role="modulo" Multiplicity="1" />
-          <End Type="db_chronos_biometria_homologModel.funcionalidade" Role="funcionalidade" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="modulo">
-              <PropertyRef Name="modulo_id" />
-            </Principal>
-            <Dependent Role="funcionalidade">
-              <PropertyRef Name="modulo_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        </Schema>
+        <EntityContainer Name="db_chronos_biometria_homologEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="funcionalidade" EntityType="Self.funcionalidade" />
+          <EntitySet Name="funcionalidade_permissao" EntityType="Self.funcionalidade_permissao" />
+          <EntitySet Name="grupo" EntityType="Self.grupo" />
+          <EntitySet Name="permissao" EntityType="Self.permissao" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="FK_funcionalidade_funcionalidade" Association="Self.FK_funcionalidade_funcionalidade">
+            <End Role="funcionalidade" EntitySet="funcionalidade" />
+            <End Role="funcionalidade1" EntitySet="funcionalidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_funcionalidade_permissao_funcionalidade" Association="Self.FK_funcionalidade_permissao_funcionalidade">
+            <End Role="funcionalidade" EntitySet="funcionalidade" />
+            <End Role="funcionalidade_permissao" EntitySet="funcionalidade_permissao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_grupo_funcionalidade" Association="Self.FK_grupo_funcionalidade">
+            <End Role="funcionalidade" EntitySet="funcionalidade" />
+            <End Role="grupo" EntitySet="grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_permissao_funcionalidade" Association="Self.FK_permissao_funcionalidade">
+            <End Role="funcionalidade" EntitySet="funcionalidade" />
+            <End Role="permissao" EntitySet="permissao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_funcionalidade_permissao" Association="Self.FK_funcionalidade_permissao">
+            <End Role="permissao" EntitySet="permissao" />
+            <End Role="funcionalidade_permissao" EntitySet="funcionalidade_permissao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_funcionalidade_permissao_grupo" Association="Self.FK_funcionalidade_permissao_grupo">
+            <End Role="grupo" EntitySet="grupo" />
+            <End Role="funcionalidade_permissao" EntitySet="funcionalidade_permissao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_grupo" Association="Self.FK_usuario_grupo">
+            <End Role="grupo" EntitySet="grupo" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="db_chronos_biometria_homologModelStoreContainer" CdmEntityContainer="db_chronos_biometria_homologEntities">
+        <EntityContainerMapping StorageEntityContainer="db_chronos_biometria_homologModelStoreContainer" CdmEntityContainer="db_chronos_biometria_homologEntities1">
           <EntitySetMapping Name="funcionalidade">
             <EntityTypeMapping TypeName="db_chronos_biometria_homologModel.funcionalidade">
               <MappingFragment StoreEntitySet="funcionalidade">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="show_menu" ColumnName="show_menu" />
-                <ScalarProperty Name="ordem" ColumnName="ordem" />
-                <ScalarProperty Name="controller" ColumnName="controller" />
-                <ScalarProperty Name="nome" ColumnName="nome" />
-                <ScalarProperty Name="modulo_id" ColumnName="modulo_id" />
                 <ScalarProperty Name="funcionalidade_id" ColumnName="funcionalidade_id" />
+                <ScalarProperty Name="funcionalidade_pai_id" ColumnName="funcionalidade_pai_id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="controller" ColumnName="controller" />
+                <ScalarProperty Name="ordem" ColumnName="ordem" />
+                <ScalarProperty Name="show_menu" ColumnName="show_menu" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="funcionalidade_permissao">
             <EntityTypeMapping TypeName="db_chronos_biometria_homologModel.funcionalidade_permissao">
               <MappingFragment StoreEntitySet="funcionalidade_permissao">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="permissao_id" ColumnName="permissao_id" />
-                <ScalarProperty Name="funcionalidade_id" ColumnName="funcionalidade_id" />
-                <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
                 <ScalarProperty Name="funcionalidade_permissao_id" ColumnName="funcionalidade_permissao_id" />
+                <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
+                <ScalarProperty Name="funcionalidade_id" ColumnName="funcionalidade_id" />
+                <ScalarProperty Name="permissao_id" ColumnName="permissao_id" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="grupo">
             <EntityTypeMapping TypeName="db_chronos_biometria_homologModel.grupo">
               <MappingFragment StoreEntitySet="grupo">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="datacriado" ColumnName="datacriado" />
-                <ScalarProperty Name="funcionalidade_id_home" ColumnName="funcionalidade_id_home" />
-                <ScalarProperty Name="nome" ColumnName="nome" />
                 <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="funcionalidade_id_home" ColumnName="funcionalidade_id_home" />
+                <ScalarProperty Name="datacriado" ColumnName="datacriado" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="permissao">
             <EntityTypeMapping TypeName="db_chronos_biometria_homologModel.permissao">
               <MappingFragment StoreEntitySet="permissao">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="nome" ColumnName="nome" />
-                <ScalarProperty Name="funcionalidade_id" ColumnName="funcionalidade_id" />
                 <ScalarProperty Name="permissao_id" ColumnName="permissao_id" />
+                <ScalarProperty Name="funcionalidade_id" ColumnName="funcionalidade_id" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usuario">
             <EntityTypeMapping TypeName="db_chronos_biometria_homologModel.usuario">
               <MappingFragment StoreEntitySet="usuario">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="ativo" ColumnName="ativo" />
-                <ScalarProperty Name="qtd_acessos" ColumnName="qtd_acessos" />
-                <ScalarProperty Name="ultimo_acesso" ColumnName="ultimo_acesso" />
-                <ScalarProperty Name="data_criado" ColumnName="data_criado" />
-                <ScalarProperty Name="imagem" ColumnName="imagem" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="login" ColumnName="login" />
-                <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
-                <ScalarProperty Name="senha" ColumnName="senha" />
-                <ScalarProperty Name="nome" ColumnName="nome" />
                 <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="modulo">
-            <EntityTypeMapping TypeName="db_chronos_biometria_homologModel.modulo">
-              <MappingFragment StoreEntitySet="modulo">
                 <ScalarProperty Name="nome" ColumnName="nome" />
-                <ScalarProperty Name="modulo_id" ColumnName="modulo_id" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="grupo_id" ColumnName="grupo_id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="imagem" ColumnName="imagem" />
+                <ScalarProperty Name="data_criado" ColumnName="data_criado" />
+                <ScalarProperty Name="ultimo_acesso" ColumnName="ultimo_acesso" />
+                <ScalarProperty Name="qtd_acessos" ColumnName="qtd_acessos" />
+                <ScalarProperty Name="ativo" ColumnName="ativo" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

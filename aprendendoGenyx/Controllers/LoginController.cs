@@ -19,19 +19,19 @@ namespace aprendendoGenyx.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(aprendendoGenyx.Models.Usuarios u)
+        public ActionResult Index(aprendendoGenyx.Models.usuario u)
         {
             // esta action trata o post (login)
             if (ModelState.IsValid) //verifica se é válido
             {
-                using (db_chronos_biometria_homologEntities dc = new db_chronos_biometria_homologEntities())
+                using (db_chronos_biometria_homologEntities1 dc = new db_chronos_biometria_homologEntities1())
                 {
                     //var v = dc.Usuarios.Where(a => a.NomeUsuario.Equals(u.NomeUsuario) && a.Senha.Equals(u.Senha)).FirstOrDefault();
-                    var v = dc.Usuarios.Where(a => a.NomeUsuario.Equals(u.NomeUsuario) && a.Senha.Equals(u.Senha)).FirstOrDefault();
+                    var v = dc.usuario.Where(a => a.login.Equals(u.login) && a.senha.Equals(u.senha)).FirstOrDefault();
                     if (v != null)
                     {
-                        Session["usuarioLogadoID"] = v.Id.ToString();
-                        Session["nomeUsuarioLogado"] = v.NomeUsuario.ToString();
+                        Session["usuarioLogadoID"] = v.usuario_id.ToString();
+                        Session["nomeUsuarioLogado"] = v.login.ToString();
                         return RedirectToAction("Index", "Home");
                     }
                 }
